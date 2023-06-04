@@ -1,23 +1,81 @@
-import React, { useCallback } from 'react';
-import './style.css';
-import { imageList } from '../images';
+import React, { useState } from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import {
+  CarouselControl,
+  Carousel,
+  CarouselItem,
+  CarouselIndicators,
+  CarouselCaption,
+} from 'reactstrap';
 
-export default function Carousel() {
-  const imageGallery = document.querySelector('.image-gallery');
-  const imageLabel = document.querySelector('.image-label');
+const CarouselComponent = ({ images }) => {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [animating, setAnimating] = useState(false);
 
-  const loadImage = useCallback(() => {
-    for (let url of imageList) {
-      imageGallery.innerHTML += `<img src="${url}"/>`;
-    }
-  }, [imageGallery]);
+  const next = () => {
+    if (animating) return;
+    const nextIndex = activeIndex === images.length - 1 ? 0 : activeIndex + 1;
+    setActiveIndex(nextIndex);
+  };
 
-  loadImage();
+  const previous = () => {
+    if (animating) return;
+    const nextIndex = activeIndex === 0 ? images.length - 1 : activeIndex - 1;
+    setActiveIndex(nextIndex);
+  };
+
+  const goToIndex = (newIndex) => {
+    if (animating) return;
+    setActiveIndex(newIndex);
+  };
+
+  const slides = images.map((item) => {
+    return (
+      <CarouselItem
+        onExiting={() => setAnimating(true)}
+        onExited={() => setAnimating(false)}
+        key={item.src}
+      >
+        <img src={item.src} alt={item.altText} />
+        <CarouselCaption
+          captionText={item.caption}
+          captionHeader={item.caption}
+        />
+      </CarouselItem>
+    );
+  });
 
   return (
-    <div className='carousel'>
-      <div className='image-label'></div>
-      <div className='image-gallery'></div>
-    </div>
+    <>
+      <div className='mt-5'>
+        <Carousel
+          activeIndex={activeIndex}
+          fade={true}
+          slide={true}
+          enableTouch={true}
+          next={next}
+          previous={previous}
+        >
+          <CarouselIndicators
+            items={images}
+            activeIndex={activeIndex}
+            onClickHandler={goToIndex}
+          />
+          {slides}
+          <CarouselControl
+            direction='prev'
+            directionText='Previous'
+            onClickHandler={previous}
+          />
+          <CarouselControl
+            direction='next'
+            directionText='Next'
+            onClickHandler={next}
+          />
+        </Carousel>
+      </div>
+    </>
   );
-}
+};
+
+export default CarouselComponent;

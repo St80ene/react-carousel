@@ -1,10 +1,11 @@
 import './App.css';
-import Carousel from './components/Carousel';
+import CarouselComponent from './components/Carousel';
+import { imageList } from './components/images';
 
 function App() {
   return (
     <div className='App'>
-      <Carousel />
+      <CarouselComponent images={imageList} />
     </div>
   );
 }
