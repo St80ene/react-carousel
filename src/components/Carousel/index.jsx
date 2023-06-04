@@ -47,31 +47,33 @@ const CarouselComponent = ({ images }) => {
 
   return (
     <>
-      <Carousel
-        activeIndex={activeIndex}
-        fade={true}
-        slide={true}
-        enableTouch={true}
-        next={next}
-        previous={previous}
-      >
-        <CarouselIndicators
-          items={images}
+      <div className='mt-5'>
+        <Carousel
           activeIndex={activeIndex}
-          onClickHandler={goToIndex}
-        />
-        {slides}
-        <CarouselControl
-          direction='prev'
-          directionText='Previous'
-          onClickHandler={previous}
-        />
-        <CarouselControl
-          direction='next'
-          directionText='Next'
-          onClickHandler={next}
-        />
-      </Carousel>
+          fade={true}
+          slide={true}
+          enableTouch={true}
+          next={next}
+          previous={previous}
+        >
+          <CarouselIndicators
+            items={images}
+            activeIndex={activeIndex}
+            onClickHandler={goToIndex}
+          />
+          {slides}
+          <CarouselControl
+            direction='prev'
+            directionText='Previous'
+            onClickHandler={previous}
+          />
+          <CarouselControl
+            direction='next'
+            directionText='Next'
+            onClickHandler={next}
+          />
+        </Carousel>
+      </div>
     </>
   );
 };
