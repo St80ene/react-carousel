@@ -49,7 +49,9 @@ const CarouselComponent = ({ images }) => {
     <>
       <Carousel
         activeIndex={activeIndex}
-        dark={true}
+        fade={true}
+        slide={true}
+        enableTouch={true}
         next={next}
         previous={previous}
       >
